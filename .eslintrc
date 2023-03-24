@@ -1,0 +1,59 @@
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "extends": [
+    "@antfu"
+  ],
+  "rules": {
+    "no-console": "off",
+    "@typescript-eslint/consistent-type-imports": "off",
+    "vue/no-deprecated-slot-attribute": "off",
+    "vue/no-reserved-component-names": "off",
+    "vue/html-self-closing": "off",
+    "tvue/html-closing-bracket-newline": "off",
+    "vue/max-attributes-per-line": ["error", {
+      "singleline": {
+        "max": 1
+      },
+      "multiline": {
+        "max": 1
+      }
+    }],
+    "vue/no-v-html": "off",
+    "vue/require-prop-types": "off",
+    "vue/require-default-prop": "off",
+    "vue/multi-word-component-names": "off",
+    "vue/max-len": [
+      "off",
+      {
+        "code": 100,
+        "template": 120,
+        "comments": 65,
+        "ignoreUrls": true
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "./server/**/*.ts"
+      ],
+      "rules": {
+        "no-console": [
+          "error",
+          {
+            "allow": [
+              "info",
+              "warn",
+              "trace",
+              "error"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
