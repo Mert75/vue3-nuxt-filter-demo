@@ -1,17 +1,14 @@
 import { COLOR_MAPPING } from '~~/components/products/constants'
-import { Phone } from '~~/types'
+import { Phone, PhoneFeed } from '~~/types'
 
 export const useProduct = defineStore('products', () => {
   const phones = ref<Phone[]>([])
   const filteredPhones = ref<Phone[]>([])
+  const isLoading = ref<boolean>(true)
 
   const filterStore = useFilter()
 
-  async function fetchFeed() {
-    const res = await useFetch('/api/phone-feed')
-
-    return JSON.parse(res.data.value)
-  }
+  const fetchFeed = async () => await useFetch<PhoneFeed>('/api/phone-feed')
 
   function applyFilters() {
     // Create a copy of the products array
@@ -40,15 +37,11 @@ export const useProduct = defineStore('products', () => {
   }
 
   onMounted(async () => {
-    const data = await fetchFeed()
+    const response = await fetchFeed()
 
     // Set the products to the data returned from the phone feed
-    phones.value = data.products.map((product: Phone) => {
-      return {
-        ...product,
-        imageSrc: new URL('~/assets/img/product_image.webp', import.meta.url).href,
-      }
-    })
+    phones.value = response.data.value?.products || []
+    isLoading.value = false
 
     watchEffect(() => {
       // When the filter values change, apply the filters
@@ -60,6 +53,7 @@ export const useProduct = defineStore('products', () => {
 
   return {
     fetchFeed,
+    isLoading: computed(() => isLoading.value),
     filteredPhones: computed(() => filteredPhones.value),
     getUniqueManufacturers,
     getUniqueColors,

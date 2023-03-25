@@ -21,7 +21,6 @@ export interface Phone {
   variants: Variant[]
   attributes: PromotionAttributes
   has_promotion: boolean
-  imageSrc: string
 }
 
 export interface Variant {
