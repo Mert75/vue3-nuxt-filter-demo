@@ -73,7 +73,9 @@ const mobileFiltersOpen = ref(false)
                   </button>
                 </div>
 
-                <!-- <ProductsFilter /> -->
+                <div class="px-4">
+                  <ProductsFilter :show-header="false" />
+                </div>
               </DialogPanel>
             </TransitionChild>
           </div>

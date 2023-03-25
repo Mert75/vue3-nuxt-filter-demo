@@ -1,4 +1,10 @@
 <script setup lang="ts">
+const props = defineProps({
+  showHeader: {
+    type: Boolean,
+    default: true,
+  },
+})
 const filterStore = useFilter()
 
 const filterComponent = (key: string) => {
@@ -16,7 +22,10 @@ const filterComponent = (key: string) => {
 </script>
 
 <template>
-  <div class="font-bold">
+  <div
+    v-if="props.showHeader"
+    class="font-bold"
+  >
     Featured Models
   </div>
 

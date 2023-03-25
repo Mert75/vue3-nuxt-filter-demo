@@ -17,7 +17,15 @@ export interface Filter {
   options: { name: string; value: string }[]
 }
 
-export type FilterOption = 'manufacturer' | 'color' | '5G' | 'E-SIM'
+export interface FilterValues {
+  manufacturer: string[]
+  color: string[]
+  '5G': boolean
+  'E-SIM': boolean
+  name: string
+}
+
+export type FilterOption = 'manufacturer' | 'color' | '5G' | 'E-SIM' | 'name'
 
 export interface PhoneFilter {
   type: FilterOption

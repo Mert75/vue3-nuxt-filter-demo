@@ -1,12 +1,13 @@
-import { FilterOption, PhoneFilter } from '~~/components/products/types'
+import { FilterValues, PhoneFilter } from '~~/components/products/types'
 import { Phone } from '~~/types'
 
 export const useFilter = defineStore('filterValues', () => {
-  const filterValues = reactive<Record<FilterOption, string[] | boolean>>({
+  const filterValues = reactive<FilterValues>({
     'manufacturer': ['Apple'],
     'color': [],
     '5G': true,
     'E-SIM': true,
+    'name': '',
   })
 
   // The filters array contains two properties:
@@ -15,7 +16,7 @@ export const useFilter = defineStore('filterValues', () => {
   const filters: PhoneFilter[] = [
     {
       type: 'manufacturer',
-      handler: (phone: Phone, filterValue: string[]) => {
+      handler: (phone, filterValue: string[]) => {
         if (filterValue.length === 0)
           return true
 
@@ -38,6 +39,10 @@ export const useFilter = defineStore('filterValues', () => {
     {
       type: 'E-SIM',
       handler: (phone: Phone, filterValue: boolean) => phone.has_esim === filterValue,
+    },
+    {
+      type: 'name',
+      handler: (phone: Phone, filterValue: string) => phone.name.toLowerCase().includes(filterValue.toLowerCase()),
     },
   ]
 

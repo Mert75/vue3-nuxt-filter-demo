@@ -1,11 +1,13 @@
 <script lang="ts" setup>
 const menuOpen = ref(false)
+
+const filter = useFilter()
 </script>
 
 <template>
   <div class="flex min-h-screen flex-col">
     <!-- Top nav -->
-    <header class="relative flex navigation-header--height flex-shrink-0 items-center border-b">
+    <header class="flex navigation-header--height flex-shrink-0 items-center border-b sticky top-0 bg-white dark:bg-dark z-10">
       <NuxtLink
         to="/"
         class="md:flex-shrink-0 flex items-center h-full"
@@ -47,10 +49,10 @@ const menuOpen = ref(false)
 
             <UiFormsInput
               id="desktop-search"
+              v-model="filter.filterValues.name"
               type="search"
               placeholder="Search..."
               class="block w-full border-transparent !pl-12"
-              onfocus="this.placeholder = 'Not implemented ;)'"
             />
 
             <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center justify-center pl-4">
