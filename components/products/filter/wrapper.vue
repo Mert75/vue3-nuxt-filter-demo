@@ -35,13 +35,6 @@ const mobileFilterMenu = useFilterMobileMenu()
         aria-labelledby="products-heading"
         class="pt-6 pb-24"
       >
-        <h2
-          id="products-heading"
-          class="sr-only"
-        >
-          Products
-        </h2>
-
         <div class="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
           <!-- Filters -->
           <aside class="hidden lg:block">
@@ -50,7 +43,12 @@ const mobileFilterMenu = useFilterMobileMenu()
 
           <!-- Product grid -->
           <div class="lg:col-span-3">
-            <ProductsList :filtered-phones="products.filteredPhones" />
+            <LoadingSpinner v-if="products.isLoading" />
+
+            <ProductsList
+              v-else
+              :filtered-phones="products.filteredPhones"
+            />
           </div>
         </div>
       </section>

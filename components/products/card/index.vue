@@ -8,6 +8,8 @@ const props = defineProps({
   },
 })
 
+const productImage = new URL('~/assets/img/product_image.webp', import.meta.url).href
+
 const { mapColors } = useProduct()
 </script>
 
@@ -17,7 +19,7 @@ const { mapColors } = useProduct()
     class="group relative cursor-pointer -mt-4 transition-transform duration-500 ease-in-out transform scale-95 hover:scale-100"
   >
     <img
-      :src="props.phone.imageSrc"
+      :src="productImage"
       class="w-full h-40 object-contain mb-2"
     />
 

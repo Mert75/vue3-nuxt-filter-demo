@@ -48,7 +48,6 @@ export default defineNuxtConfig({
     },
   },
   devServer: {
-    host: 'localhost',
     port: 1337,
   },
   colorMode: {
