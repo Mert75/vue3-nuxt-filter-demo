@@ -1,72 +1,43 @@
 import { COLOR_MAPPING } from '~~/components/products/constants'
-import { FilterOption } from '~~/components/products/types'
-import { Phone, PhoneFeed } from '~~/types'
+import { Phone } from '~~/types'
 
-interface PhoneFilter {
-  type: FilterOption
-  handler: (phone: Phone, filterValue: any) => boolean
-}
-
-export default function () {
+export const useProduct = defineStore('products', () => {
   const phones = ref<Phone[]>([])
   const filteredPhones = ref<Phone[]>([])
 
-  async function fetchFeed(): Promise<PhoneFeed> {
+  const filterStore = useFilter()
+
+  async function fetchFeed() {
     const res = await useFetch('/api/phone-feed')
 
     return JSON.parse(res.data.value)
   }
 
-  const getUniqueManufacturers = computed(() => {
-    return [...new Set(phones.value.map(product => product.manufacturer))]
-  })
+  function applyFilters() {
+    // Create a copy of the products array
+    let _filteredProducts = phones.value.slice()
 
-  const getUniqueColors = computed(() => {
-    return [...new Set(phones.value.map(product => product.variants.map(variant => variant.attributes.color_name)).flat())]
-  })
+    // Loop through the filters and apply each filter to the products
+    filterStore.filters.forEach((filter) => {
+      _filteredProducts = _filteredProducts.filter(phone => filter.handler(phone, filterStore.filterValues[filter.type]))
+    })
 
-  const getColorMapping = (color: string[]) => {
-    return color.map(color => COLOR_MAPPING[color])
+    filteredPhones.value = _filteredProducts
   }
 
-  const filterValues = reactive<Record<FilterOption, any>>({
-    'manufacturer': [''],
-    'color': [''],
-    '5G': false,
-    'E-SIM': false,
-  })
+  const getUniqueManufacturers = () => {
+    return [...new Set(phones.value.map(phone => phone.manufacturer))]
+  }
 
-  // The filters array contains filter objects with two properties:
-  // type: The type of filter. This is used to determine the filter value to use.
-  // handler: The filter handler function. This function takes the phone and value as arguments and returns true or false.
-  const filters: PhoneFilter[] = [
-    {
-      type: 'manufacturer',
-      handler: (phone: Phone, filterValue: string[]) => {
-        if (filterValue.length === 0)
-          return true
+  function getUniqueColors() {
+    const colors = phones.value.map(phone => phone.variants.map(variant => variant.attributes.color_name))
 
-        return filterValue.includes(phone.manufacturer)
-      },
-    },
-    {
-      type: 'color',
-      handler: (phone: Phone, filterValue: string[]) => {
-        if (filterValue.length === 0)
-          return true
+    return [...new Set(colors.flat())]
+  }
 
-        return phone.variants.some(variant => filterValue.includes(variant.attributes.color_name))
-      },
-    },
-    {
-      type: '5G',
-      handler: (phone, filterValue: boolean) => phone.has_5g === filterValue,
-    },
-    {
-      type: 'E-SIM',
-      handler: (phone, filterValue) => phone.has_esim === filterValue,
-    },
-  ]
+  function mapColors(color: string[]) {
+    return color.map(color => COLOR_MAPPING[color])
+  }
 
   onMounted(async () => {
     const data = await fetchFeed()
@@ -75,32 +46,23 @@ export default function () {
     phones.value = data.products.map((product: Phone) => {
       return {
         ...product,
-        imageSrc: 'https://www.kpn.com/shop/cdn/products/_/product_11755930_main.webp',
+        imageSrc: new URL('~/assets/img/product_image.webp', import.meta.url).href,
       }
+    })
+
+    watchEffect(() => {
+      // When the filter values change, apply the filters
+      // We use the detached option so that the effect is not disposed when the component is unmounted
+      // We use the immediate option so that the effect is run immediately
+      filterStore.$subscribe(applyFilters, { detached: true, immediate: true })
     })
   })
 
-  // This code watches for changes in the filter values and filters the list of phones accordingly.
-  // watchEffect(() => {
-  //   filteredPhones.value = phones.value.filter((phone: Phone) => {
-  //     return filters.every((filter: PhoneFilter) => {
-  //       return filter.handler(phone, filterValues[filter.type])
-  //     })
-  //   })
-  // })
-
   return {
     fetchFeed,
-    products: phones,
-    filteredPhones,
-    uniqueManufacturers: getUniqueManufacturers,
-    colors: {
-      getUniqueColors,
-      getColorMapping,
-    },
-    filters: {
-      filterValues,
-      phoneFilters: filters,
-    },
+    filteredPhones: computed(() => filteredPhones.value),
+    getUniqueManufacturers,
+    getUniqueColors,
+    mapColors,
   }
-}
+})

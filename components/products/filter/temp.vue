@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const product = useProduct()
+const { filterValues } = useFilter()
 </script>
 
 <template>
@@ -9,17 +9,17 @@ const product = useProduct()
       <label>
         Manufacturer:
         <input
-          v-model="product.filters.filterValues.manufacturer"
+          v-model="filterValues.manufacturer"
           type="text"
         >
       </label>
       <br>
       <label>
         Color:
-        <select v-model="product.filters.filterValues.color">
+        <select v-model="filterValues.color">
           <option value="">-- Select color --</option>
           <option
-            v-for="color in product.colors.getUniqueColors.value"
+            v-for="color in useProduct().getUniqueColors()"
             :key="color"
             :value="color"
           >
@@ -31,7 +31,7 @@ const product = useProduct()
       <label>
         5G support:
         <input
-          v-model="product.filters.filterValues['5G']"
+          v-model="filterValues['5G']"
           type="checkbox"
         >
       </label>
@@ -39,19 +39,10 @@ const product = useProduct()
       <label>
         E-SIM support:
         <input
-          v-model="product.filters.filterValues['E-SIM']"
+          v-model="filterValues['E-SIM']"
           type="checkbox"
         >
       </label>
-
-      <ul>
-        <li
-          v-for="phone in product.filteredPhones.value"
-          :key="phone.id"
-        >
-          {{ phone.name }}
-        </li>
-      </ul>
     </div>
   </div>
 </template>

@@ -6,7 +6,7 @@ export const SORT_OPTIONS: SortOption[] = [
   { name: 'Promotion', filter_key: SortKeys.Promotion },
 ]
 
-export const MANIFACTURERS = [
+export const MANUFACTURERS = [
   'Apple',
   'Samsung',
   'Xiaomi',
@@ -21,22 +21,13 @@ export const DEFAULT_OPTIONS = [
   { name: 'No', value: 'no' },
 ]
 
-export const COLORS = [
-  'white',
-  'beige',
-  'blue',
-  'brown',
-  'green',
-  'purple',
-]
-
 export const COLOR_MAPPING: Record<string, string> = {
   BLAUW: '#215E7B',
   ROZE: '#F9DED7',
   ZILVER: '#F9F4EF',
   ZWART: '#161D24',
-  GEEL: 'yellow',
-  GOUD: 'gold',
+  GEEL: '#FFFF00',
+  GOUD: '#FFD700',
   ROOD: '#a30112',
   PAARS: '#8B008B',
 }

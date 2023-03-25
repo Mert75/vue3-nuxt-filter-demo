@@ -11,6 +11,9 @@ import {
 } from '@headlessui/vue'
 import { SORT_OPTIONS } from '../constants'
 
+const products = useProduct()
+const totalProducts = computed(() => products.filteredPhones.length)
+
 const mobileFiltersOpen = ref(false)
 </script>
 
@@ -83,7 +86,7 @@ const mobileFiltersOpen = ref(false)
             <span class="font-normal">
               Choose from
             </span>
-            43+ phones
+            {{ totalProducts }}+ phones
           </h1>
 
           <div class="flex items-center">
@@ -158,12 +161,11 @@ const mobileFiltersOpen = ref(false)
             <!-- Filters -->
             <aside class="hidden lg:block">
               <ProductsFilter />
-              <!-- <ProductsFilterTemp /> -->
             </aside>
 
             <!-- Product grid -->
             <div class="lg:col-span-3">
-              <ProductsList />
+              <ProductsList :filtered-phones="products.filteredPhones" />
             </div>
           </div>
         </section>

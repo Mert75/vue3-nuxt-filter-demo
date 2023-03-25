@@ -9,6 +9,7 @@ export default defineNuxtConfig({
   modules: [
     '@vueuse/nuxt',
     '@nuxtjs/robots',
+    '@nuxt/devtools',
     [
       '@pinia/nuxt',
       {

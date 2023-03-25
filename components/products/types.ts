@@ -20,5 +20,6 @@ export interface Filter {
 export type FilterOption = 'manufacturer' | 'color' | '5G' | 'E-SIM'
 
 export interface PhoneFilter {
-  handler: (product: Phone, type: FilterOption) => boolean
+  type: FilterOption
+  handler: (phone: Phone, filterValue: any) => boolean
 }

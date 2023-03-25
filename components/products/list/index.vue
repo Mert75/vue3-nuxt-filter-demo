@@ -1,5 +1,12 @@
 <script setup lang="ts">
-const productFeed = useProduct()
+import { Phone } from '~~/types'
+
+defineProps({
+  filteredPhones: {
+    type: Array as PropType<Phone[]>,
+    required: true,
+  },
+})
 </script>
 
 <template>
@@ -9,9 +16,13 @@ const productFeed = useProduct()
         role="list"
         class="mx-4 sm:mx-6 lg:mx-0 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 sm:gap-x-8 lg:space-x-0 not-prose gap-y-4"
       >
+        <div v-if="filteredPhones.length === 0">
+          No products found.
+        </div>
+
         <ProductsCard
-          v-for="product in productFeed.products.value"
-          :key="product.id"
+          v-for="(product, ix) in filteredPhones"
+          :key="ix"
           :phone="product"
         />
       </ul>
