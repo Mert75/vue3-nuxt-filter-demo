@@ -1,6 +1,6 @@
 {
-  "name": "endtech-ui",
-  "description": "Starter template for Nuxt 3 with TypeScript, Tailwind CSS, and Pinia",
+  "name": "vue3-nuxt-filter-demo",
+  "description": "Filter demo built with Nuxt 3, TypeScript, Tailwind CSS, and Pinia",
   "author": {
     "name": "Mert Polat"
   },
