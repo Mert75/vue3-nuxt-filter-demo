@@ -12,9 +12,9 @@ const showAll = ref(false)
 
 const displayedManufacturers = computed(() => {
   if (showAll.value)
-    return product.getUniqueManufacturers()
+    return product.getUniqueManufacturers
 
-  return product.getUniqueManufacturers().slice(0, 5)
+  return product.getUniqueManufacturers.slice(0, 5)
 })
 </script>
 

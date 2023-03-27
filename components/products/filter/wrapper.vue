@@ -1,6 +1,5 @@
 <script setup lang="ts">
 const products = useProduct()
-const totalProducts = computed(() => products.filteredPhones.length)
 
 const mobileFilterMenu = useFilterMobileMenu()
 </script>
@@ -21,7 +20,7 @@ const mobileFilterMenu = useFilterMobileMenu()
           <span class="font-normal">
             Choose from
           </span>
-          {{ totalProducts }}+ phones
+          {{ products.filteredPhones.length }}+ phones
         </h1>
 
         <div class="flex items-center">

@@ -46,5 +46,13 @@ export const useFilter = defineStore('filterValues', () => {
     },
   ]
 
-  return { filterValues, filters }
+  const applyFilter = (phones: Ref<Phone[]>) => {
+    return phones.value.filter((phone) => {
+      return filters.every((filter) => {
+        return filter.handler(phone, filterValues[filter.type])
+      })
+    })
+  }
+
+  return { filterValues, applyFilter, filters }
 })

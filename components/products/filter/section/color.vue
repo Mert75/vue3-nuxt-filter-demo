@@ -12,9 +12,9 @@ const showAll = ref(false)
 
 const displayedColors = computed(() => {
   if (showAll.value)
-    return product.getUniqueColors()
+    return product.getUniqueColors
 
-  return product.getUniqueColors().slice(0, 5)
+  return product.getUniqueColors.slice(0, 5)
 })
 </script>
 
