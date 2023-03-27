@@ -1,4 +1,6 @@
-# Nuxt 3 Minimal Starter
+# Nuxt 3 Filter Demo
+
+<img src="./assets/img/nuxt3-demo-showcase.png" alt="Nuxt 3 Filter Demo" width="100%" />
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 

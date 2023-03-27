@@ -33,8 +33,10 @@ export const useProduct = defineStore('products', () => {
       // When the filter values change, apply the filters
       // We use the detached option so that the effect is not disposed when the component is unmounted
       // We use the immediate option so that the effect is run immediately
-      filterStore.$subscribe(() => filteredPhones.value = filterStore.applyFilter(phones),
-        { detached: true, immediate: true },
+      filterStore.$subscribe(() => {
+        filteredPhones.value = filterStore.applyFilter(phones)
+      },
+      { detached: true, immediate: true },
       )
     })
   })
